@@ -5,6 +5,56 @@
 #include <PubSubClient.h>
 #include <AceCRC.h>
 
+//###############################
+//##                           ##
+//##   C O N N E C T I O N S   ##
+//##                           ##
+//###############################
+
+//
+// The Arduino core for the ESP8266 LOLIN D1 mini defines
+// constants for LOLIN pins D0 through D8 as well as for the
+// conventional pins for RX, TX, SDA, SCL, SCK, MOSI and MISO.
+//
+
+//
+// The CC1101 module is connected as follows:
+//
+// Signal    -> Pin -> LOLIN pin -> Core pin
+// GND       -> 1   -> GND
+// VCC       -> 2   -> 3V3
+// GDO0      -> 3   -> D1        -> D1
+// CSN       -> 4   -> D8        -> D8
+// SCK       -> 5   -> D5        -> SCK
+// MOSI      -> 6   -> D7        -> MOSI
+// MISO/GDO1 -> 7   -> D6        -> MISO
+// GDO2      -> 8   -> NC
+//
+static const uint8_t GDO0 = D1;
+static const uint8_t CSN  = D8;
+
+//
+// Declare the CC1101's connections to RadioLib:
+//
+// Chip select: CSN
+// Interrupt: GDD0
+// Reset: unused
+// Secondary interrupt: unused (optional)
+//
+CC1101 radio = new Module(CSN, GDO0, RADIOLIB_NC, RADIOLIB_NC);
+
+//
+// IotWebConf also makes use of an external button and LED.
+//
+static const uint8_t CONFIG_PIN = D2; // Active low button
+static const uint8_t STATUS_PIN = D0; // Active high LED
+
+//###############################################
+//##                                           ##
+//##   R A D I O   C O N F I G U R A T I O N   ##
+//##                                           ##
+//###############################################
+
 // Select the type of CRC algorithm we'll be using
 using namespace ace_crc::crc16ccitt_byte;
 
@@ -21,18 +71,9 @@ using namespace ace_crc::crc16ccitt_byte;
 // IotWebConf Config
 #define CONFIG_PARAM_MAX_LEN 128
 #define CONFIG_VERSION "mqt2"
-#define CONFIG_PIN 4 // D2
-#define STATUS_PIN 16 // D0
 
 // Kinetic2MQTT Config
 #define DEBOUNCE_MILLIS 15
-
-// CC1101 has the following connections:
-// CS pin:    15
-// GDO0 pin:  5
-// RST pin:   unused
-// GDO2 pin:  unused (optional)
-CC1101 radio = new Module(15, 5, RADIOLIB_NC, RADIOLIB_NC);
 
 // Set up IotWebConf
 const char deviceName[] = "kinetic2mqtt";
