@@ -4,9 +4,10 @@ This project is a proof-of-concept receiver for kinetic wireless switches such a
 Direct: https://www.tlc-direct.co.uk/Main_Index/Quinetic/index.html.  This project is demonstrated in the following YouTube
 video: https://youtu.be/tz_F4Tjhap0
 
-This project is an Arduino sketch designed to run on ESP8266 microcontrollers connected to a CC1101 433MHz receiver.  As the
-sketch is currently configured, the CC1101 should be connected to the ESP8266 over SPI with the CS pin connected to 15 on the
-ESP and GDO0 pin on the CC1101 connected to pin 5 on the ESP.
+This project is an Arduino sketch designed to run on ESP8266, ESP32 or ESP32-S2 microcontrollers
+on "mini" format modules connected to a CC1101 433MHz receiver.  As the sketch is currently
+configured, the CC1101 should be connected to the module over SPI with the CS pin connected
+to mini pin D8 GDO0 pin on the CC1101 connected to mini pin D1.
 
 This project uses IotWebConf to provide a setup and configuration interface.  When first powered on, the ESP will broadcast a
 WiFi network with an SSID of "kinetic2mqtt" - connnect to this using the password in the sketch and navigate to 192.168.4.1 in

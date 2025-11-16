@@ -5,6 +5,8 @@
 #include <PubSubClient.h>
 #include <AceCRC.h>
 
+#include "MiniPins.h"
+
 //###############################
 //##                           ##
 //##   C O N N E C T I O N S   ##
@@ -12,26 +14,20 @@
 //###############################
 
 //
-// The Arduino core for the ESP8266 LOLIN D1 mini defines
-// constants for LOLIN pins D0 through D8 as well as for the
-// conventional pins for RX, TX, SDA, SCL, SCK, MOSI and MISO.
-//
-
-//
 // The CC1101 module is connected as follows:
 //
-// Signal    -> Pin -> LOLIN pin -> Core pin
+// Signal    -> Pin -> LOLIN pin
 // GND       -> 1   -> GND
 // VCC       -> 2   -> 3V3
-// GDO0      -> 3   -> D1        -> D1
-// CSN       -> 4   -> D8        -> D8
-// SCK       -> 5   -> D5        -> SCK
-// MOSI      -> 6   -> D7        -> MOSI
-// MISO/GDO1 -> 7   -> D6        -> MISO
+// GDO0      -> 3   -> D1
+// CSN       -> 4   -> D8
+// SCK       -> 5   -> D5
+// MOSI      -> 6   -> D7
+// MISO/GDO1 -> 7   -> D6
 // GDO2      -> 8   -> NC
 //
-static const uint8_t GDO0 = D1;
-static const uint8_t CSN  = D8;
+static const uint8_t GDO0_PIN = MINI_D1;
+static const uint8_t CSN_PIN  = MINI_D8;
 
 //
 // Declare the CC1101's connections to RadioLib:
@@ -41,13 +37,13 @@ static const uint8_t CSN  = D8;
 // Reset: unused
 // Secondary interrupt: unused (optional)
 //
-CC1101 radio = new Module(CSN, GDO0, RADIOLIB_NC, RADIOLIB_NC);
+CC1101 radio = new Module(CSN_PIN, GDO0_PIN, RADIOLIB_NC, RADIOLIB_NC);
 
 //
 // IotWebConf also makes use of an external button and LED.
 //
-static const uint8_t CONFIG_PIN = D2; // Active low button
-static const uint8_t STATUS_PIN = D0; // Active high LED
+static const uint8_t CONFIG_PIN = MINI_D2; // Active low button
+static const uint8_t STATUS_PIN = MINI_D0; // Active high LED
 
 //###############################################
 //##                                           ##
